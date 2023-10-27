@@ -165,12 +165,12 @@ function FormCard({ form }:{ form:Form }) {
       </CardContent>
       <CardFooter>
         {form.published && (
-          <Button asChild className="w-full mt-2 text-md gap-4">
+          <Button asChild className="w-full mt-2 text-md gap-4" variant={"secondary"}>
             <Link href={`/forms/${form.id}`}> View submissions <BiRightArrowAlt/></Link>
           </Button>
         )}
         {!form.published && (
-          <Button asChild className="w-full mt-2 text-md gap-4">
+          <Button asChild className="w-full mt-2 text-md gap-4" variant={"secondary"}>
             <Link href={`/builder/${form.id}`}> Edit form <FaEdit/></Link>
           </Button>
         )}
