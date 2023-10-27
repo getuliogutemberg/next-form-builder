@@ -1,4 +1,4 @@
-import { GetFormsStats } from "@/actions/form"
+import { GetForms, GetFormsStats } from "@/actions/form"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Suspense } from "react"
@@ -8,6 +8,7 @@ import { HiCursorClick } from 'react-icons/hi'
 import { TbArrowBounce } from 'react-icons/tb'
 import { Separator } from "@/components/ui/separator"
 import CreateFormBtn from "@/components/CreateFormBtn"
+import { Form } from "@prisma/client"
 
 
 export default function Home() {
@@ -21,6 +22,14 @@ export default function Home() {
       <Separator className="my-6"/>
       <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <CreateFormBtn />
+        <Suspense
+          fallback={[1,2,3,4].map((el)=>{
+            return <FormCardSkeleton key={el} />
+          })}
+        >
+
+          <FormCards />
+        </Suspense>
       </div>
     </div>
   )
@@ -110,5 +119,28 @@ function StatsCard({
       </div>
       <p className="text-xs text-muted-foreground pt-1">{helperText}</p>
     </CardContent>
+  </Card>
+}
+
+function FormCardSkeleton() {
+  return <Skeleton className="border- border-primary-/20 h-[190px] w-full" />
+}
+
+async function FormCards(){
+ const forms= await GetForms()
+ return <>
+ {forms.map((form)=>{
+   return <FormCard key={form.id} form={form} />
+ })}
+ </>
+}
+
+function FormCard({ form }:{ form:Form }) {
+  return <Card>
+    <CardHeader>
+      <CardTitle>
+        <span className="flex items-center gap-2 justify-between">{form.name}</span>
+      </CardTitle>
+    </CardHeader>
   </Card>
 }
