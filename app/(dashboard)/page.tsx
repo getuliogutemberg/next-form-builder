@@ -2,15 +2,26 @@ import { GetFormsStats } from "@/actions/form"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Suspense } from "react"
-import {LuView} from 'react-icons/lu'
+import { LuView } from 'react-icons/lu'
 import { FaWpforms } from 'react-icons/fa'
 import { HiCursorClick } from 'react-icons/hi'
 import { TbArrowBounce } from 'react-icons/tb'
+import { Separator } from "@/components/ui/separator"
+import CreateFormBtn from "@/components/CreateFormBtn"
+
 
 export default function Home() {
   return (
     <div className="container pt-4">
-      <Suspense fallback={<StatsCards loading={true} />}><CardStatsWrapper /></Suspense>
+      <Suspense fallback={<StatsCards loading={true} />}>
+        <CardStatsWrapper />
+      </Suspense>
+      <Separator className="my-6"/>
+        <h2 className="text-4xl font-bold col-span-2">Forms</h2>
+      <Separator className="my-6"/>
+      <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <CreateFormBtn />
+      </div>
     </div>
   )
 }
